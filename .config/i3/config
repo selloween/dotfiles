@@ -40,8 +40,8 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
+bindsym $mod+d exec dmenu_run -i -p 'Run' -fn 'DejaVu Sans Mono:normal:pixelsize=12' -nb '#0a0f14' -nf '#98d1ce' -sb '#195465' -sf '#ffffff'
 
-bindsym $mod+d exec dmenu_run -i -p 'Run' -fn 'DejaVu Sans Mono:normal:pixelsize=12' -nb '#282A36' -nf '#F8F8F2' -sb '#BD93F9' -sf '#282A36'
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -134,7 +134,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -166,35 +166,42 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
- 	colors{
- 	       background #282a36
- 	       statusline #DCDCDC
- 	       focused_workspace  #bd93f9 #44475a #DCDCDC
- 	       active_workspace   #bd93f9 #002b36 #282a36
- 	       inactive_workspace #282a36 #021215 #586e75
- 	       urgent_workspace   #cb4b16 #dc322f #fdf6e
- 	}
+  #status_command i3status
+  status_command i3blocks
+  colors{
+    background #0a0f14
+    statusline #599caa
+    focused_workspace  #195465 #0a0f14 #98d1ce
+    active_workspace   #195465 #0a0f14 #98d1ce
+    inactive_workspace #282a36 #0a0f14 #245361
+    urgent_workspace   #c33027 #0a0f14 #c33027
+  }
 }
-# class                 border  backgr. text    indicator
-client.focused          #bd93f9 #bd93f9 #bd93f9 #BD93F9
-client.unfocused        #44475a #44475a #44475a #44475a
-client.focused_inactive #323232 #333333 #ebdbb2 #323232
-client.urgent           #383a3b #383a3b #ee0000 #383a3b
 
+## Custom colors
+# class                 border  backgr. text    indicator
+client.focused          #0a0f14 #245361 #0a0f14 #0a0f14
+client.unfocused        #0a0f14 #093748 #0a0f14 #0a0f14
+client.focused_inactive #0a0f14 #093748 #0a0f14 #0a0f14
+client.urgent           #0a0f14 #d26939 #0a0f14 #0a0f14
+
+# Remove titlebar
+new_window 1pixel
+
+## Custom auto start
+exec --no-startup-id nm-apple -t
 exec --no-startup-id udiskie -t
-exec --no-startup-id nm-applet
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id compton -b
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+# Audio bindings
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle && pkill -RTMIN+10 i3blocks
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
-
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -202,6 +209,15 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-new_window 1pixel
-
+# Lock Screen
 bindsym $mod+y exec --no-startup-id i3lock
+
+# Network Settings
+bindsym $mod+n exec --no-startup-id urxvt -name nmtui-connect -e nmtui-connect
+
+# Launch vim
+bindsym $mod+shift+v exec --no-startup-id urxvt -name vim -e vim
+
+# Launch morc_menu
+# https://github.com/Boruch-Baum/morc_menu.git
+bindsym $mod+z exec morc_menu
