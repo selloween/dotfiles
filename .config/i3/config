@@ -189,8 +189,8 @@ client.urgent           #0a0f14 #d26939 #0a0f14 #0a0f14
 new_window 1pixel
 
 ## Custom auto start
-exec --no-startup-id nm-apple -t
-exec --no-startup-id udiskie -t
+#exec --no-startup-id nm-applet
+exec --no-startup-id udiskie
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id compton -b
 
