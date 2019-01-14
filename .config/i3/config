@@ -189,10 +189,13 @@ client.urgent           #0a0f14 #d26939 #0a0f14 #0a0f14
 new_window 1pixel
 
 ## Custom auto start
-#exec --no-startup-id nm-applet
-exec --no-startup-id udiskie
+exec --no-startup-id nm-applet
+exec --no-startup-id udiskie -t
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id compton -b
+exec --no-startup-id "xrandr --output DP2 --mode 2560x1440 --auto"
+exec --no-startup-id pasystray
+
 
 # Audio bindings
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && pkill -RTMIN+10 i3blocks
@@ -221,3 +224,10 @@ bindsym $mod+shift+v exec --no-startup-id urxvt -name vim -e vim
 # Launch morc_menu
 # https://github.com/Boruch-Baum/morc_menu.git
 bindsym $mod+z exec morc_menu
+
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show

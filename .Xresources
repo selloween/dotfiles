@@ -15,7 +15,7 @@ Xft.rgba:       rgb
 
 ! black
 *.color0:       #0a0f14
-*.color8:       #10151b
+*.color8:       #98D1CE
 
 ! red
 *.color1:       #c33027
@@ -44,4 +44,3 @@ Xft.rgba:       rgb
 ! white
 *.color7:       #98d1ce
 *.color15:      #d3ebe9
-oin/bash: special: cemmand not found
